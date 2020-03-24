@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tyut.apps.gss.mapper.extend.BaseExtendMapper">
+
+  <resultMap id="RoleResultMap" type="com.tyut.apps.gss.bean.Role">
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="rname" jdbcType="VARCHAR" property="rname" />
+  </resultMap>
+
+  <resultMap id="ClaResultMap" type="com.tyut.apps.gss.bean.Cla">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+  </resultMap>
+
+  <resultMap id="AcademyResultMap" type="com.tyut.apps.gss.bean.Academy">
+    <id column="aid" jdbcType="INTEGER" property="aid" />
+    <result column="aname" jdbcType="VARCHAR" property="aname" />
+  </resultMap>
+
+  <resultMap id="ResultMap" type="com.tyut.apps.gss.bean.extend.BaseExtend" extends="BaseResultMap">
+    <association property="roles" resultMap="RoleResultMap"></association>
+    <association property="cla" resultMap="ClaResultMap"></association>
+    <association property="academy" resultMap="AcademyResultMap"></association>
+  </resultMap>
+
+  <select id="selectBaseByRid" parameterType="Integer" resultMap="ResultMap">
+    select bid,createdate,email,gender,name,password,phone,qq,sno,rname,cname,aname
+    from base,roles,cla,academy
+    where rid = r_id and c_id = cid and a_id = aid and r_id = #{r_id};
+  </select>
+
+  <!--查询所有-->
+  <select id="selectAllBase" parameterType="Integer" resultMap="ResultMap">
+    select bid,createdate,email,gender,name,password,phone,qq,sno,rname,cname,aname
+    from base,roles,cla,academy
+    where rid = r_id and c_id = cid and a_id = aid;
+  </select>
+
+  <!--依据bid查找-->
+  <select id="selectBaseByBid" parameterType="Integer" resultMap="ResultMap">
+    select bid,createdate,email,gender,name,password,phone,qq,sno,rname,cname,aname
+    from base,roles,cla,academy
+    where rid = r_id and c_id = cid and a_id = aid and bid = #{bid};
+  </select>
+
+  <!--依据name查找-->
+  <select id="selectBaseByName" parameterType="String" resultMap="ResultMap">
+    select bid,createdate,email,gender,name,password,phone,qq,sno,rname,cname,aname
+    from base,roles,cla,academy
+    where rid = r_id and c_id = cid and a_id = aid and name = #{name};
+  </select>
+
+  <!--依据sno查找-->
+  <select id="selectBaseBySno" parameterType="String" resultMap="ResultMap">
+    select bid,createdate,email,gender,name,password,phone,qq,sno,rname,cname,aname
+    from base,roles,cla,academy
+    where rid = r_id and c_id = cid and a_id = aid and sno = #{sno};
+  </select>
+
+
+  <resultMap id="BaseResultMap" type="com.tyut.apps.gss.bean.Base">
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="createdate" jdbcType="TIMESTAMP" property="createdate" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="sno" jdbcType="VARCHAR" property="sno" />
+  </resultMap>
+
+</mapper>
